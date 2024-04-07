@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello, World!</title>
+</head>
+<body>
+  <p>ADVANCED APPLICATION DEVELOPMENT
+    PRACTICAL:1 
+    AIM:Create an app using Flutter to demonstrate navigation in an App.
+    
+    CODE: 
+    
+    import 'package:flutter/material.dart';
+    void main() {
+     runApp(MaterialApp(
+       home: MyApp(),
+     )); }
+    class MyApp extends StatelessWidget {
+     Widget build(BuildContext context ) {
+       return Scaffold(
+           appBar: AppBar(title: Text("First Screen"), centerTitle: true),
+           body: Center(child:ElevatedButton(child:Text("Next"), onPressed: () {
+             Navigator.push(context,MaterialPageRoute(builder: (context) => SecondRoute()));
+           },
+             style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),))
+       );
+    
+     }
+    }
+    class SecondRoute extends StatelessWidget {
+     Widget build(BuildContext context) {
+       return Scaffold (
+           appBar: AppBar(title: Text("Second screen"),),
+           body: Center(
+             child: ElevatedButton(
+               child: Text("Go back"),
+               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+               onPressed: (){
+                 Navigator.pop(context);
+               },
+             ),
+    
+           )
+       );
+     }
+    }
+    PRACTICAL:2
+    
+    AIM:Create a flutter app to demonstrate various layouts.
+    CODE : 
+    
+    import 'package:flutter/material.dart';
+    
+    void main(){
+      runApp(MyApp());
+    }
+    
+    class MyApp extends StatelessWidget{
+      @override
+      Widget build(BuildContext context){
+        return MaterialApp(home: LoginScreen(),);
+      }
+    }
+    
+    class LoginScreen extends StatelessWidget{
+      @override
+      Widget build(BuildContext context){
+        return Scaffold(appBar:AppBar(
+          title: Text("Login Screen"),centerTitle: true,
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 5
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    ElevatedButton(onPressed: (){//logic
+                      }, child: Text("Login"),)
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Padding(padding: EdgeInsets.all(14.0),
+                  child: Text("Forgot Password",style: TextStyle(
+                    fontSize: 15, fontWeight: FontWeight.bold
+                  ),),
+                  ),
+                  Padding(padding: EdgeInsets.all(16.0),
+                  child: Text("Don't have an account?",style: TextStyle(
+                    fontSize: 15,fontWeight: FontWeight.bold
+                  ),),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+        );
+      }
+    }
+    
+    
+    
+    PRACTICAL:3
+    AIM : Create an app using flutter for user Authentication.
+    CODE : 
+    import 'package:flutter/material.dart';
+    void main() {
+      runApp(MyApp());
+    }
+    class MyApp extends StatelessWidget {
+      @override
+      Widget build(BuildContext context) {
+        return MaterialApp(
+          home: AuthScreen(),
+        );
+      }
+    }
+    class AuthScreen extends StatefulWidget {
+      @override
+      _AuthScreenState createState() => _AuthScreenState();
+    }
+    class _AuthScreenState extends State<AuthScreen> {
+      TextEditingController usernameController = TextEditingController();
+      TextEditingController passwordController = TextEditingController();
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('User Authentication'),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(1)
+                  ),
+                  child:   TextField(
+                    controller: usernameController,
+                    decoration: InputDecoration(labelText: 'Username'),
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(1),
+    
+    
+                  ),
+                  child:   TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: 'Password'),
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    authenticateUser();
+                  },
+                  child: Text('Authenticate'),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      void authenticateUser() {
+    // Replace these static values with your desired username and password.
+        if (usernameController.text == 'user' && passwordController.text == 'password') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Authentication Successful'),
+                content: Text('Welcome, ${usernameController.text}!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Authentication Failed'),
+                content: Text('Invalid username or password.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
+    }
+    
+    
+    
+    
+    
+    PRACTICAL:4
+    AIM : Write a program to implement data models -
+    Terminal:
+    >use database
+    > db.createCollection('employee')
+    > db.employee.insertOne({name:'st',price:8000,category:'HM'})
+    
+    index.js
+    const mongoose=require('mongoose')
+    mongoose.connect("mongodb://localhost:27017/book");
+    function run(){
+      const productSchema= new mongoose.Schema( {
+       name: String ,price:Number
+    })
+    const pro= mongoose.model('products' ,productSchema);
+    pro.createCollection().then(function(){console.log('Collection is created')});
+    pro.collection.insertOne({name:'a1', price: 6000})
+    pro.collection.insertOne({name : "a2", price:6000})
+    pro.collection.insertOne({name: "a3", price: 6000})
+    pro.collection.insertMany([{name:"a4", price:6000}, {name: "a5" ,price :6000}])
+    }
+    run();
+    
+    
+    Vs Terminal:
+    student@sjchslab2:~/Demon4$ node index.js
+    Collection is created
+    
+    
+    
+    Practical 5 
+    
+    AIM :  Write a program to implement CRUD operations on Mongodb.
+    Terminal :
+    >use emp1
+    > db.createCollection('employee')
+    > db.employee.insertOne({name:'st',price:8000,category:'HM'})
+    
+    insert.js
+    const mongodb = require('mongodb');
+    const MongoClient = mongodb.MongoClient;
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'emp1';
+    async function main() {
+      const client = new MongoClient(uri);
+      try {
+          await client.connect();
+          console.log('Connected to MongoDB');
+          const db = client.db('emp1');
+          const collection = db.collection('emps');
+          await collection.insertOne({name:'emp8', age:40, dept:'Admin'});
+          console.log('inserted document')
+      } catch (err) {
+          console.error('Error occurred:', err);
+      } finally {
+          await client.close();
+          console .log('Connection Closed')
+      } }
+      main();
+    
+    
+    Find.js
+    
+    const { MongoClient } = require('mongodb');
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'emp1';
+    async function main() {
+    const client = new MongoClient(uri);
+    try {
+      await client.connect();
+      console.log('Connected to MongoDB');
+      const db = client.db(dbName);
+      const collection = db.collection('emps');
+      const findResult = await collection.find().toArray();
+      console.log(findResult);
+    } catch (err) {
+      console.error('Error occurred:', err);
+    } finally {
+      await client.close();
+      console.log('Connection closed');
+    }
+    }
+    main();
+    
+    
+    Update.js
+    
+    const { MongoClient } = require('mongodb');
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'emp1';
+    async function main() {
+    const client = new MongoClient(uri);
+    try {
+     
+      await client.connect();
+      console.log('Connected to MongoDB');
+      const db = client.db(dbName);
+      const collection = db.collection('emps');
+      const updateResult = await collection.updateMany({ name: 'emp5' }, { $set: { name: 'emp10' } });
+      console.log('Updated document');
+    } catch (err) {
+      console.error('Error occurred:', err);
+    } finally {
+      await client.close();
+      console.log('Connection closed');
+    }
+    }
+    main();
+    
+    
+    Delete.js
+    
+    const { MongoClient } = require('mongodb');
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'emp1';
+    async function main() {
+    const client = new MongoClient(uri);
+    try {
+      await client.connect();
+      console.log('Connected to MongoDB');
+      const db = client.db(dbName);
+      const collection = db.collection('emps');
+      const deleteResult = await collection.deleteMany({ name: 'emp3' });
+      console.log('Deleted document');
+    } catch (err) {
+      console.error('Error occurred:', err);
+    } finally {
+      await client.close();
+      console.log('Connection closed');
+    }
+    }
+    main();
+    
+    
+    Practical 6:
+    Aim: Write a program to perform validation of a form using AngularJS.
+    
+    Vs code terminal:
+    npm init-y
+    npm install ‘@angular/cli’
+    ng new pract6
+    file<src<app<........
+    
+    File -> open folder ->minimise VS
+    Terminal -> new terminal -> npm init -y -> npm install -g @angular/cli -> ng new myfirst ->cd myfirst
+    
+    Code:
+    app.component.html
+    <h1>{{title}}</h1>
+    <form [formGroup]="loginform" (ngSubmit)="loginuser()">
+     <input type="text" name="user" formControlName="user">
+     <span style="color:red" *ngIf="user && user.invalid && user.touched"> Enter Email</span>
+     <br>
+     <br>
+     <input type="text" name="password" formControlName="password">
+     <span style="color:red" *ngIf="password && password.invalid && password.touched"> Enter password</span>
+     <br>
+     <br>
+     <button [disabled]="loginform.invalid">Login</button>
+    </form>
+    
+    app.component.ts
+    import { Component } from '@angular/core';
+    import { FormControl,FormGroup,Validators,FormControlName } from '@angular/forms';
+    @Component({
+     selector: 'app-root',
+     templateUrl: './app.component.html',
+     styleUrls: ['./app.component.css']
+    })
+    export class AppComponent {
+     title = 'myfirst';
+     loginform=new FormGroup({
+       user:new FormControl("",[Validators.required,Validators.email]),
+       password:new FormControl("",[Validators.required,Validators.minLength(5)])
+     })
+     get user()
+     {
+       return this.loginform.get('user');
+     }
+     get password()
+     {
+       return this.loginform.get('password');
+     }
+     loginuser()
+     {
+       console.log(this.loginform.value)
+     }
+    }
+    
+    app.module.ts
+    import { NgModule } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { ReactiveFormsModule } from '@angular/forms';
+    import { AppComponent } from './app.component';
+    @NgModule({
+     declarations: [
+       AppComponent
+     ],
+     imports: [
+       BrowserModule,ReactiveFormsModule
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+    
+    
+    Output:
+    ->ng serve
+    Practical 7 
+    AIM : Write a program implement modules&Controller.
+    
+    VS Terminal -
+    >npm init -y
+    >npm install -g @angular/cli
+    >ng new myfirst
+    
+     Terminal : npm init -y -> npm install -g -> ng new myfirst
+    
+    app.component.html
+    
+    <html> <body>
+     <h1> Hello</h1>
+     {{title}}
+     <div>
+       Enter Your Name: <input type = "text" value = {{name}}/> <br> <br>
+       <button (click) = "greet()"> Greet Me!</button>
+      </div>
+     <input [(ngModel)] = "fullName"/> <br> <br>
+     <p> {{fullName}}
+     </p>
+    </body></html>
+    
+    app.component.ts
+    
+    import { Component } from '@angular/core';
+    @Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+    })
+    export class AppComponent {
+    title = 'Prac 7';
+    name: string = "SYCS";
+    fullName: string="Hello Java";
+    greet() : void {
+      alert("Hello, " + this.name);
+    }
+    }
+    
+    app.module.ts
+    
+    import { NgModule } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { FormsModule } from '@angular/forms';
+    import { AppComponent } from './app.component';
+    @NgModule({
+    declarations: [
+      AppComponent
+    ],
+    imports: [
+      BrowserModule ,
+      FormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+    
+    
+    PRACTICAL 8
+    AIM:Create a simple “Hello world” project using angular JS Framework and apply ng-controller, ng-model and expression.
+    
+    Index.html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script
+    src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+    </script>
+    <script src="./myscript.js"></script>
+    </head>
+    <body ng-app="myapp" ng-controller="myctrl">
+    <h1>Hello World!!!</h1>
+    <div>
+    <h1>{{title}}</h1>
+    <h1><p>Name:</h1> <input type="text" ng-model="name"></p>
+    <h1>Hello {{name}}</h1>s
+    </div>
+    </body>
+    </html>
+    
+    myscript.js
+    let app=angular.module('myapp',[]);
+    app.controller('myctrl',($scope)=>
+    {
+       $scope.title="stay home stay safe";
+    })
+    
+    Style.css
+    body{
+       background:rgb(128, 116, 15);
+    }
+    
+    
+    </p>
+</body>
+</html>
